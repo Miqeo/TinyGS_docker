@@ -21,6 +21,7 @@
     "express": "^4.14.1",
     "express-ws": "^3.0.0",
     "openmct": "latest",
+    "sqlite3": "^5.1.7",
     "ws": "^2.0.3"
   }
 }

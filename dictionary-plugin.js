@@ -22,11 +22,11 @@ var objectProvider = {
                 return {
                     identifier: identifier,
                     name: measurement.name,
-                    type: 'example.telemetry',
+                    type: 'telemetry',
                     telemetry: {
                         values: measurement.values
                     },
-                    location: 'example.taxonomy:spacecraft'
+                    location: 'spacecraft'
                 };
             }
         });
@@ -35,7 +35,7 @@ var objectProvider = {
 
 var compositionProvider = {
     appliesTo: function (domainObject) {
-        return domainObject.identifier.namespace === 'example.taxonomy' &&
+        return domainObject.identifier.namespace === 'taxonomy' &&
                domainObject.type === 'folder';
     },
     load: function (domainObject) {
@@ -43,7 +43,7 @@ var compositionProvider = {
             .then(function (dictionary) {
                 return dictionary.measurements.map(function (m) {
                     return {
-                        namespace: 'example.taxonomy',
+                        namespace: 'taxonomy',
                         key: m.key
                     };
                 });
@@ -54,17 +54,17 @@ var compositionProvider = {
 function DictionaryPlugin() {
     return function install(openmct) {
         openmct.objects.addRoot({
-            namespace: 'example.taxonomy',
+            namespace: 'taxonomy',
             key: 'spacecraft'
         });
 
-        openmct.objects.addProvider('example.taxonomy', objectProvider);
+        openmct.objects.addProvider('taxonomy', objectProvider);
 
         openmct.composition.addProvider(compositionProvider);
 
-        openmct.types.addType('example.telemetry', {
-            name: 'Example Telemetry Point',
-            description: 'Example telemetry point from our happy tutorial.',
+        openmct.types.addType('telemetry', {
+            name: 'Telemetry Point',
+            description: '',
             cssClass: 'icon-telemetry'
         });
     };

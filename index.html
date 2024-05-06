@@ -5,7 +5,19 @@
     <script src="node_modules/openmct/dist/openmct.js"></script>
     <script src="lib/http.js"></script>
     <script src="dictionary-plugin.js"></script>
+    <script src="historical-telemetry-plugin.js"></script>
+    <script src="realtime-telemetry-plugin.js"></script>
     <script>
+        const THIRTY_SECONDS = 30 * 1000;
+        const ONE_MINUTE = THIRTY_SECONDS * 2;
+        const FIVE_MINUTES = ONE_MINUTE * 5;
+        const TEN_MINUTES =  FIVE_MINUTES *2;
+        const FIFTEEN_MINUTES = FIVE_MINUTES * 3;
+        const THIRTY_MINUTES = FIFTEEN_MINUTES * 2;
+        const ONE_HOUR = THIRTY_MINUTES * 2;
+        const TWO_HOURS = ONE_HOUR * 2;
+        const ONE_DAY = ONE_HOUR * 24;
+
         document.addEventListener('DOMContentLoaded', function () {
             openmct.setAssetPath('node_modules/openmct/dist');
             openmct.install(openmct.plugins.LocalStorage());
@@ -16,6 +28,25 @@
             openmct.install(openmct.plugins.Espresso());
             
             openmct.install(DictionaryPlugin());
+            openmct.install(HistoricalTelemetryPlugin());
+            openmct.install(RealtimeTelemetryPlugin());
+
+            openmct.install(
+                openmct.plugins.Conductor({
+                menuOptions: [
+                    {
+                    name: 'Realtime',
+                    timeSystem: 'utc',
+                    clock: 'local',
+                    clockOffsets: {
+                        start: -THIRTY_MINUTES,
+                        end: -TEN_MINUTES
+                    },
+                    presets: []
+                    }
+                ]
+                })
+            );
     
             openmct.start();
         });
