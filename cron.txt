@@ -1,2 +1,2 @@
-*/10 * * * * /usr/bin/php -f tinygs.php > /dev/null 2>&1
+*/10 * * * * /usr/bin/php -f /app/tinygs.php
 * * * * * /bin/date > /etc/db/cron.log
